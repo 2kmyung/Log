@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+
+    const root = document.getElementById("root");
+
+    //매개 변수에 html element의 태그 & property & innerText
+    // const displayer
+    //     = React.createElement("h1", {
+    //         id: "title",
+    //         onMouseOver: () => console.log("d"),
+    //     }, "Hello World");
+
+    /*아래와 똑같음*/
+    const Title = () => (
+        <h3 id="title" onMouseEnter={console.log("d")}>
+            Hello World
+        </h3>
+    );
+
+    const Button = () => (
+        <button
+            style={{
+                backgroundColor: "tomato",
+            }}
+            onClick={() => console.log("d")}
+        >
+            Click
+        </button>
+    );
+
+    /*component(Title, Button)의 첫글자는 반드시 대문자(html 태그와의 구분을 위해)*/
+
+    const Container = () => (
+        <div>
+            <Title/>
+            <Button/>
+        </div>
+    );
+
+    //이건 html화 안 시키는 게 더 마음에 듬...
+    //ReactDOM.render(Container, root);
+    ReactDOM.render(<Container/>, root);
+
+</script>
+
+</html>
