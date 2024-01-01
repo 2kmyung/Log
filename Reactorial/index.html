@@ -23,11 +23,16 @@
 
     function App() {
 
-        const [minutes, setMinutes] = React.useState()
-        
-        const OnChange = (event) => setMinutes(event.target.value);
-        const Reset = () => setMinutes(0);
+        const [amount, setAmount] = React.useState();
+        const[flipped, setFlipped] = React.useState(false);
+        //const [hours, setHours] = React.useState()
 
+        const OnChange = (event) => setAmount(event.target.value);
+        const Reset = () => setAmount(0);
+        const OnFlip = () => {
+            setFlipped((current) => !current);
+            setAmount(flipped ? amount * 60 : Math.round(amount / 60));
+        }
 
         return (
             <div>
@@ -36,24 +41,25 @@
                 <div>
                     <label htmlFor="minutes">M</label>
                     <input
-                        value={minutes}
+                        value={flipped ? amount * 60 : amount}
                         placehoder="Minutes"
                         type="number"
                         onChange={OnChange}
+                        disabled={flipped}
                     />
                 </div>
                 <div>
                     <label htmlFor="hours">H</label>
                     <input
-                        value={Math.round(minutes / 60)}
+                        value={flipped ? amount : Math.round(amount / 60)}
                         placehoder="Hours"
                         type="number"
-                        disabled
-                    //onChange={OnChange} 
+                        disabled={!flipped}
+                        onChange={OnChange} 
                     />
                 </div>
                 <button onClick={Reset}>Reset</button>
-                <h4>{minutes}Min to {Math.round(minutes / 60)}H</h4>
+                <button onClick={OnFlip}>Flip</button>
             </div>
         );
     }
