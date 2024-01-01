@@ -24,20 +24,36 @@
     function App() {
 
         const [minutes, setMinutes] = React.useState()
+        
         const OnChange = (event) => setMinutes(event.target.value);
+        const Reset = () => setMinutes(0);
+
 
         return (
             <div>
                 {/*JSX 내에서는 for이나 class 같은 JS의 키워드를 쓰면 안 됨*/}
                 <h1 className="hi">Super Converter</h1>
-                <label htmlFor="minutes">M</label>
-                <input value={minutes} 
-                placehoder="Minutes"
-                type="number"
-                onChange={OnChange}/>
-                <label htmlFor="hours">H</label>
-                <input placehoder="Hours" type="number"/>
-                <h4>{minutes}Min to H</h4>
+                <div>
+                    <label htmlFor="minutes">M</label>
+                    <input
+                        value={minutes}
+                        placehoder="Minutes"
+                        type="number"
+                        onChange={OnChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="hours">H</label>
+                    <input
+                        value={Math.round(minutes / 60)}
+                        placehoder="Hours"
+                        type="number"
+                        disabled
+                    //onChange={OnChange} 
+                    />
+                </div>
+                <button onClick={Reset}>Reset</button>
+                <h4>{minutes}Min to {Math.round(minutes / 60)}H</h4>
             </div>
         );
     }
