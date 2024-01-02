@@ -31,9 +31,10 @@
         const OnChange = (event) => setAmount(event.target.value);
         const Reset = () => setAmount(0);
         const OnFlip = () => {
+            //??SetAmount 전에 inverted를 바꿔준 게 적용이 안 됨ㅋㅋ 순서가 상관없어짐 비동기라 그런가?
             setInverted((current) => !current);
             setAmount(inverted ? amount * 60 : Math.round(amount / 60));
-        }
+            }
 
         return (
             <div>
@@ -41,6 +42,7 @@
                 <div>
                     <label htmlFor="minutes">M</label>
                     <input
+                        id="minutes"
                         value={inverted ? amount * 60 : amount}
                         placehoder="Minutes"
                         type="number"
@@ -51,6 +53,7 @@
                 <div>
                     <label htmlFor="hours">H</label>
                     <input
+                        id="hours"
                         value={inverted ? amount : Math.round(amount / 60)}
                         placehoder="Hours"
                         type="number"
@@ -72,27 +75,29 @@
         const Reset = () => setAmount(0);
         const OnFlip = () => {
             setInverted((current) => !current);
-            setAmount(inverted ? amount * 60 : Math.round(amount / 60));
+            setAmount(inverted ? amount / 0.621371 : amount * 0.621371);
         }
 
         return (
             <div>
                 {/*JSX 내에서는 for이나 class 같은 JS의 키워드를 쓰면 안 됨*/}
                 <div>
-                    <label htmlFor="minutes">KM</label>
+                    <label htmlFor="kilometers">KM</label>
                     <input
-                        value={inverted ? amount * 60 : amount}
-                        placehoder="Minutes"
+                        id="kilometers"
+                        value={inverted ? amount / 0.621371 : amount}
+                        placehoder="Kilometers"
                         type="number"
                         onChange={OnChange}
                         disabled={inverted}
                     />
                 </div>
                 <div>
-                    <label htmlFor="hours">M</label>
+                    <label htmlFor="miles">M</label>
                     <input
-                        value={inverted ? amount : Math.round(amount / 60)}
-                        placehoder="Hours"
+                        id="miles"
+                        value={inverted ? amount : amount * 0.621371}
+                        placehoder="Miles"
                         type="number"
                         disabled={!inverted}
                         onChange={OnChange}
