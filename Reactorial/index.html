@@ -13,6 +13,7 @@
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script type="text/babel">
 
     const root = document.getElementById("root");
@@ -38,10 +39,11 @@
     //     );
     // }
 
-    function Btn({text, big})
+    function Btn({text, onClick, big = false})
     {
         return(
         <button
+        onClick={onClick}
         style={{
             backgroundColor: "4d2090",
             color: "navy",
@@ -56,16 +58,29 @@
         );
     }
 
+    const MemorizedBtn = React.memo(Btn)
 
+    //디버깅용
+    Btn.propTypes = {
+        text: PropTypes.string.isRequired,
+        //onClick: PropTypes.ac
+        big: PropTypes.boolean,
+    }
+
+
+    // 부모 컴포넌트(App?)이 상태를 변경하면 자식 컴포넌트도 모두 다시 그려진다.(버튼 두 개)
+    // 따라서 React Memo를 이용해 최적화
     function App() {
 
-        const [index, setIndex] = React.useState("0");
-        const onSelect = (event) => setIndex(event.target.value);
+        const [value, setValue] = React.useState("SaveChanges");
+
+        const changeValue = () => setValue("Revert Changes");
 
         return (
             <div>
-                <Btn text="New" big={true}/>
-                <Btn text="Load" big={false}/>
+                {/*여기에서의 onClick은 내가 정한 Btn 컴포넌트의 prop 이름일 뿐이다.*/}
+                <Btn text={value} onClick={changeValue}/>
+                <MemorizedBtn text="Load" big={false}/>
             </div>
         );
     }
